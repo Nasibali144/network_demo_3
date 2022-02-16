@@ -1,0 +1,6 @@
+enum CRUD {
+  TYPE_CREATE,
+  TYPE_READ,
+  TYPE_UPDATE,
+  TYPE_DELETE,
+}

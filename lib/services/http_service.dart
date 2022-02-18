@@ -8,7 +8,8 @@ class HttpService {
 
   // Header
   static Map<String, String> headers =  {
-    'Content-type': 'application/json; charset=UTF-8',
+    'Content-type': 'application/json',
+    'Authorization': 'Client-ID BXF0CQshdaskashJMKurmjcnIhR2UZdSWw3B6dQnTlEj0i-WcMk'
   };
 
   // Apis
@@ -29,7 +30,7 @@ class HttpService {
     return null;
   }
 
-  static Future<String?> POST(String api, Map<String, String> params) async {
+  static Future<String?> POST(String api, Map<String, dynamic> params) async {
     var uri = Uri.https(BASE_URL, api);
     Response response = await post(uri, headers: headers, body: jsonEncode(params));
     if(response.statusCode == 201) {
@@ -71,14 +72,10 @@ class HttpService {
     return map;
   }
 
-  // static Map<String, String> paramsCreate(Todo todo) {
-  //   Map<String, String> map = {
-  //     'userId': todo.userId.toString(),
-  //     'title': todo.title,
-  //     'completed' : todo.completed.toString(),
-  //   };
-  //   return map;
-  // }
+  static Map<String, dynamic> paramsCreate(User user) {
+    Map<String, dynamic> map = user.toJson();
+    return map;
+  }
   //
   // static Map<String, String> paramsUpdate(Todo todo) {
   //   Map<String, String> map = {
@@ -105,6 +102,12 @@ class HttpService {
   }
 
   static User parseUserOne(String body) {
+    Map<String, dynamic> json = jsonDecode(body);
+    User user = User.fromJson(json);
+    return user;
+  }
+
+  static User parseCreateUser(String body) {
     Map<String, dynamic> json = jsonDecode(body);
     User user = User.fromJson(json);
     return user;

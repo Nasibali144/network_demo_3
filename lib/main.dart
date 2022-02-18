@@ -8,6 +8,7 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
+  static final RouteObserver<PageRoute> routeObserver =  RouteObserver<PageRoute>();
 
   @override
   Widget build(BuildContext context) {
@@ -16,11 +17,15 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home:  HomePage(),
+      initialRoute: HomePage.id,
+      // home:  HomePage(),
       routes: {
         HomePage.id: (context) => HomePage(),
         DetailPage.id: (context) => DetailPage(),
       },
+      navigatorObservers: [
+        routeObserver,
+      ],
     );
   }
 }

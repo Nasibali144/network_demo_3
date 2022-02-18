@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:network_demo_3/main.dart';
 import 'package:network_demo_3/models/user_model.dart';
 import 'package:network_demo_3/pages/detail_page.dart';
 import 'package:network_demo_3/services/http_service.dart';
@@ -13,7 +14,7 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with RouteAware {
   UserList? userList;
   String data = "no data";
   List colorList = Colors.primaries;
@@ -37,6 +38,18 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       userList = HttpService.parseUserList(response);
     });
+  }
+
+  @override
+  void didPopNext() {
+    super.didPop();
+    apiGetUserList();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    MyApp.routeObserver.subscribe(this, ModalRoute.of(context) as PageRoute);
   }
 
 
